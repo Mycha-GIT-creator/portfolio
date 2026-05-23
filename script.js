@@ -5,6 +5,13 @@
 
 'use strict';
 
+/* EASTER EGG: Spider developer message */
+if (typeof window !== 'undefined') {
+  console.log('%c🕷️ Welcome to mycha.sh', 'font-size:24px;font-weight:bold;color:#00e5ff;text-shadow:0 0 10px rgba(0,229,255,.5);');
+  console.log('%cLooking for vulnerabilities in my portfolio? Try harder! 🔍', 'font-size:14px;color:#ff00ea;');
+  console.log('%cCybersecurity Student @ ADSSU | Lurking in every corner of the web', 'font-size:12px;color:#4a6070;font-style:italic;');
+}
+
 /* ─────────────────────────────────────────
    SECTION 1 · THEME TOGGLE
    ───────────────────────────────────────── */
@@ -80,9 +87,18 @@ type();
    SECTION 4 · INTERSECTION OBSERVER (fade-in & timeline)
    ───────────────────────────────────────── */
 const io = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+  entries.forEach((e, idx) => {
+    if (e.isIntersecting) {
+      e.target.classList.add('vis');
+      // Stagger animation for better visual flow
+      if (e.target.dataset.animate) {
+        e.target.style.animationDelay = (idx * 0.15) + 's';
+      }
+    }
+  });
 }, { threshold: 0.1 });
-document.querySelectorAll('.fi, .t-item').forEach((el, i) => {
+
+document.querySelectorAll('.fi, .t-item, [data-animate]').forEach((el, i) => {
   if (el.classList.contains('t-item')) el.style.transitionDelay = (i * 0.08) + 's';
   io.observe(el);
 });
@@ -336,12 +352,11 @@ function closeModalOnBg(e) { if (e.target.id === 'modalOverlay') closeModal(); }
    SECTION 10 · GALLERY LIGHTBOX (NEW)
    ───────────────────────────────────────── */
 const galleryData = [
-  { icon: '🕷️', title: 'Photo 01', sub: 'Upload your photo here' },
-  { icon: '📸', title: 'Photo 02', sub: 'Upload your photo here' },
-  { icon: '🖼️', title: 'Photo 03', sub: 'Upload your photo here' },
-  { icon: '📷', title: 'Photo 04', sub: 'Upload your photo here' },
-  { icon: '🌙', title: 'Photo 05', sub: 'Upload your photo here' },
-  { icon: '✨', title: 'Photo 06', sub: 'Upload your photo here' },
+  { icon: '🕷️', title: 'Action photo', sub: 'Gallery image from the portfolio folder', src: 'gallery/act.jpg' },
+  { icon: '📸', title: 'First photo', sub: 'Gallery image from the portfolio folder', src: 'gallery/1st.jpg' },
+  { icon: '🖼️', title: 'Third photo', sub: 'Gallery image from the portfolio folder', src: 'gallery/3rd.jpg' },
+  { icon: '📷', title: 'Champion photo', sub: 'Gallery image from the portfolio folder', src: 'gallery/champ.jpg' },
+  { icon: '✨', title: 'Best action', sub: 'Gallery image from the portfolio folder', src: 'gallery/best%20act.jpg' },
 ];
 
 function openLightbox(i) {
@@ -349,6 +364,9 @@ function openLightbox(i) {
   document.getElementById('lb-icon').textContent = d.icon;
   document.getElementById('lb-title').textContent = d.title;
   document.getElementById('lb-sub').textContent = d.sub;
+  const img = document.getElementById('lb-img');
+  img.src = d.src;
+  img.alt = d.title;
   document.getElementById('lightboxOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -399,35 +417,46 @@ const checkName = attachValidation('cf-name', 'cf-name-err', validateName);
 const checkEmail = attachValidation('cf-email', 'cf-email-err', validateEmail);
 const checkMsg = attachValidation('cf-msg', 'cf-msg-err', validateMsg);
 
-function submitForm(e) {
+async function submitForm(e) {
   e.preventDefault();
   const ok = checkName() && checkEmail() && checkMsg();
   if (!ok) { showToast('// please fix errors above'); return; }
+
+  const form = document.getElementById('contactForm');
   const btn = document.getElementById('cf-btn');
-  const name = document.getElementById('cf-name').value.trim();
-  const email = document.getElementById('cf-email').value.trim();
-  const msg = document.getElementById('cf-msg').value.trim();
-  btn.textContent = '// opening email...'; btn.disabled = true;
+  const formData = new FormData(form);
 
-  const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
-  const body = encodeURIComponent(`From: ${name}\nEmail: ${email}\n\n${msg}`);
-  window.location.href = `mailto:mychasjimenea@gmail.com?subject=${subject}&body=${body}`;
+  btn.textContent = '// sending...';
+  btn.disabled = true;
 
-  setTimeout(() => {
+  try {
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: { Accept: 'application/json' },
+    });
+
+    if (!response.ok) throw new Error('Submission failed');
+
     document.getElementById('cf-ok').classList.add('show');
-    btn.textContent = '// email opened ✓';
-    document.getElementById('cf-name').value = '';
-    document.getElementById('cf-email').value = '';
-    document.getElementById('cf-msg').value = '';
+    btn.textContent = '// sent ✓';
+    form.reset();
     ['cf-name','cf-email','cf-msg'].forEach(id => {
       const el = document.getElementById(id);
       el.classList.remove('valid','invalid');
     });
-    setTimeout(() => {
-      document.getElementById('cf-ok').classList.remove('show');
-      btn.textContent = '// send message'; btn.disabled = false;
-    }, 5000);
-  }, 800);
+  } catch (err) {
+    showToast('// submission failed, please try again');
+    btn.textContent = '// send message';
+    btn.disabled = false;
+    return;
+  }
+
+  setTimeout(() => {
+    document.getElementById('cf-ok').classList.remove('show');
+    btn.textContent = '// send message';
+    btn.disabled = false;
+  }, 5000);
 }
 
 /* ─────────────────────────────────────────
@@ -456,9 +485,25 @@ function submitForm(e) {
    SECTION 13 · BACK TO TOP
    ───────────────────────────────────────── */
 const backTop = document.getElementById('back-top');
+let scrollTimeout;
 window.addEventListener('scroll', () => {
   backTop.classList.toggle('visible', window.scrollY > 300);
+  
+  // Smooth fade-in/fade-out with opacity
+  if (window.scrollY > 300) {
+    clearTimeout(scrollTimeout);
+    backTop.style.opacity = '1';
+  }
+  scrollTimeout = setTimeout(() => {
+    if (window.scrollY <= 300) {
+      backTop.style.opacity = '0';
+    }
+  }, 150);
 }, { passive: true });
+
+// Add smooth scroll behavior to button
+backTop.style.transition = 'opacity 0.3s ease';
+backTop.style.opacity = '0';
 
 /* ─────────────────────────────────────────
    SECTION 14 · ACTIVE NAV ON SCROLL
@@ -480,12 +525,33 @@ sections.forEach(s => navObserver.observe(s));
    SECTION 15 · MOBILE MENU
    ───────────────────────────────────────── */
 function toggleMenu() {
-  document.getElementById('hamburger').classList.toggle('open');
-  document.getElementById('mobileMenu').classList.toggle('open');
+  const hamburger = document.getElementById('hamburger');
+  const menu = document.getElementById('mobileMenu');
+  hamburger.classList.toggle('open');
+  menu.classList.toggle('open');
+  
+  // Prevent body scroll when menu is open
+  if (menu.classList.contains('open')) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = '';
+  }
 }
+
 function closeMenu() {
   document.getElementById('hamburger').classList.remove('open');
   document.getElementById('mobileMenu').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Enhance touch targets for mobile
+if (window.innerWidth <= 768) {
+  document.querySelectorAll('.soc-btn, .btn, .c-link').forEach(el => {
+    el.style.minHeight = '48px';
+    el.style.display = 'flex';
+    el.style.alignItems = 'center';
+    el.style.justifyContent = 'center';
+  });
 }
 
 /* ─────────────────────────────────────────
