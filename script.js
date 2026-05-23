@@ -18,10 +18,20 @@ toggleBtn.addEventListener('click', () => {
   const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   html.setAttribute('data-theme', next);
   localStorage.setItem('mycha-theme', next);
+
+  // Avatar glitch effect
   avatarFrame.classList.remove('glitching');
   void avatarFrame.offsetWidth;
   avatarFrame.classList.add('glitching');
   setTimeout(() => avatarFrame.classList.remove('glitching'), 600);
+
+  // Photo theme transition effect
+  const avatarImg = document.getElementById('avatarImg');
+  if (avatarImg) {
+    avatarImg.classList.add('theme-switching');
+    setTimeout(() => avatarImg.classList.remove('theme-switching'), 700);
+  }
+
   setTimeout(drawRadar, 450);
   const pb = document.getElementById('progress-bar');
   pb.style.width = '100%'; pb.style.opacity = '1';
@@ -44,7 +54,7 @@ window.addEventListener('scroll', updateProgress, { passive: true });
    ───────────────────────────────────────── */
 const roles = [
   'Aspiring Cybersecurity Specialist',
-  'BSIT Student @ ADSU',
+  'BSIT Student @ ADSSU',
   'Web Developer',
   'Ethical Hacking Enthusiast',
   'Python & Java Programmer',
@@ -213,10 +223,10 @@ function drawRadar() {
   const W2 = radarCanvas.width, H2 = radarCanvas.height;
   const cx = W2 / 2, cy = H2 / 2, R = Math.min(W2, H2) * 0.38;
   const skills = [
-    { label: 'HTML/CSS', val: .82, color: '#00e5ff' },
-    { label: 'JS', val: .65, color: '#39ff14' },
+    { label: 'Java', val: .80, color: '#ffd700' },
+    { label: 'HTML/CSS', val: .72, color: '#00e5ff' },
     { label: 'Python', val: .60, color: '#ff00ea' },
-    { label: 'Java', val: .50, color: '#ffd700' },
+    { label: 'JS', val: .55, color: '#39ff14' },
     { label: 'Networking', val: .40, color: '#ff6b35' },
     { label: 'Linux', val: .35, color: '#a855f7' },
   ];
@@ -285,24 +295,24 @@ if (radarCanvas) radarObserver.observe(radarCanvas);
    ───────────────────────────────────────── */
 const projects = [
   {
-    num: '01', title: 'Network Scanner',
-    desc: 'A Python-based local network scanner that identifies active hosts and open ports. Built as a hands-on exercise in understanding TCP/IP fundamentals, socket programming, and the basics of ethical hacking methodology.',
-    tags: ['Python', 'Networking', 'Ethical Hacking', 'Sockets'], status: 'In Progress'
+    num: '01', title: 'Library Management System',
+    desc: 'A Java + JavaFX desktop application for managing library operations — adding and tracking books, managing borrower records, handling checkouts and returns, and generating simple reports.',
+    tags: ['Java', 'JavaFX', 'OOP', 'Desktop App'], status: 'Completed'
   },
   {
-    num: '02', title: 'Portfolio Website',
-    desc: 'This very site! A fully hand-coded dark-themed portfolio featuring spider web canvas animations, dark/light mode with avatar glitch effects, typing animations, scroll progress bar, project modals, skills radar, and a contact form.',
-    tags: ['HTML', 'CSS', 'JavaScript', 'Canvas API', 'Design'], status: 'Live'
+    num: '02', title: 'Restaurant Ordering System',
+    desc: 'A Java + JavaFX simulation of a restaurant ordering workflow — browse menu items, place orders, track order status, and generate a formatted receipt at checkout.',
+    tags: ['Java', 'JavaFX', 'OOP', 'Desktop App'], status: 'Completed'
   },
   {
-    num: '03', title: 'Password Strength Analyzer',
-    desc: 'A browser-based tool that analyzes password strength using entropy calculations and common pattern detection (dictionary words, keyboard walks, repeated chars). Displays a color-coded visual meter with actionable feedback.',
-    tags: ['JavaScript', 'HTML', 'CSS', 'Security'], status: 'In Progress'
+    num: '03', title: 'Smart Waste Management System',
+    desc: 'A Java + JavaFX application designed to track and schedule waste collection, categorize waste types, and encourage better disposal habits through a clean and informative interface.',
+    tags: ['Java', 'JavaFX', 'OOP', 'Desktop App'], status: 'Completed'
   },
   {
-    num: '04', title: 'Coming Soon',
-    desc: 'The next project is lurking in the shadows, taking shape. Likely something in the cybersecurity or networking space. Watch this space — it will be worth the wait. 🕷️',
-    tags: ['???'], status: 'Planned'
+    num: '04', title: 'My First Calculator',
+    desc: 'The project that started it all. A basic arithmetic calculator built with Java and JavaFX — simple operations, clean UI, and the first time I made something that actually worked on screen. 🕷️',
+    tags: ['Java', 'JavaFX', 'Beginner'], status: 'Completed'
   },
 ];
 
@@ -321,7 +331,6 @@ function closeModal() {
   document.body.style.overflow = '';
 }
 function closeModalOnBg(e) { if (e.target.id === 'modalOverlay') closeModal(); }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeLightbox(); } });
 
 /* ─────────────────────────────────────────
    SECTION 10 · GALLERY LIGHTBOX (NEW)
@@ -395,10 +404,18 @@ function submitForm(e) {
   const ok = checkName() && checkEmail() && checkMsg();
   if (!ok) { showToast('// please fix errors above'); return; }
   const btn = document.getElementById('cf-btn');
-  btn.textContent = '// sending...'; btn.disabled = true;
+  const name = document.getElementById('cf-name').value.trim();
+  const email = document.getElementById('cf-email').value.trim();
+  const msg = document.getElementById('cf-msg').value.trim();
+  btn.textContent = '// opening email...'; btn.disabled = true;
+
+  const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
+  const body = encodeURIComponent(`From: ${name}\nEmail: ${email}\n\n${msg}`);
+  window.location.href = `mailto:mychasjimenea@gmail.com?subject=${subject}&body=${body}`;
+
   setTimeout(() => {
     document.getElementById('cf-ok').classList.add('show');
-    btn.textContent = '// sent ✓';
+    btn.textContent = '// email opened ✓';
     document.getElementById('cf-name').value = '';
     document.getElementById('cf-email').value = '';
     document.getElementById('cf-msg').value = '';
@@ -409,8 +426,8 @@ function submitForm(e) {
     setTimeout(() => {
       document.getElementById('cf-ok').classList.remove('show');
       btn.textContent = '// send message'; btn.disabled = false;
-    }, 4000);
-  }, 1200);
+    }, 5000);
+  }, 800);
 }
 
 /* ─────────────────────────────────────────
@@ -513,6 +530,56 @@ document.querySelector('.nav-logo').addEventListener('click', (e) => {
 
 // CV button toast
 document.querySelector('.btn-cv')?.addEventListener('click', e => {
-  e.preventDefault();
-  showToast('// CV not uploaded yet — coming soon!');
+  // If CV file doesn't exist yet, show a toast; otherwise let the download proceed
+  const link = e.currentTarget;
+  if (link.getAttribute('href') === 'cv/Mycha_Jimenea_CV.pdf') {
+    // Will work once the CV file is placed at cv/Mycha_Jimenea_CV.pdf
+    // If not found, browser will handle the 404 gracefully
+  }
+});
+
+/* ─────────────────────────────────────────
+   SECTION 18 · CERTIFICATE LIGHTBOX
+   ───────────────────────────────────────── */
+const certData = [
+  {
+    label: '// Cisco — Networking Basics',
+    img: 'certs/cert_networking_basics.png',
+    issuer: 'Cisco Networking Academy  ·  Issued: Nov 01, 2025'
+  },
+  {
+    label: '// Cisco — Network Addressing & Basic Troubleshooting',
+    img: 'certs/cert_network_addressing.png',
+    issuer: 'Cisco Networking Academy  ·  Issued: Nov 02, 2025'
+  },
+  {
+    label: '// HackerRank — Java (Basic)',
+    img: 'certs/cert_java_basic.png',
+    issuer: 'HackerRank  ·  Earned: Mar 13, 2025  ·  ID: 42546C67ACB7'
+  },
+  {
+    label: '// HackerRank — Problem Solving (Intermediate)',
+    img: 'certs/cert_problem_solving.png',
+    issuer: 'HackerRank  ·  Earned: Mar 13, 2025  ·  ID: 2EC2819BB662'
+  },
+];
+
+function openCertLightbox(i) {
+  const c = certData[i];
+  document.getElementById('cert-lb-label').textContent = c.label;
+  document.getElementById('cert-lb-img').src = c.img;
+  document.getElementById('cert-lb-img').alt = c.label;
+  document.getElementById('cert-lb-issuer').textContent = c.issuer;
+  document.getElementById('certLbOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCertLightbox() {
+  document.getElementById('certLbOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeCertLbOnBg(e) { if (e.target.id === 'certLbOverlay') closeCertLightbox(); }
+
+// Also close cert lightbox on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeLightbox(); closeCertLightbox(); }
 });
