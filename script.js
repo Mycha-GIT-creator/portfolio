@@ -357,6 +357,7 @@ const galleryData = [
   { icon: '🖼️', title: 'Third photo', sub: 'Gallery image from the portfolio folder', src: 'gallery/3rd.jpg' },
   { icon: '📷', title: 'Champion photo', sub: 'Gallery image from the portfolio folder', src: 'gallery/champ.jpg' },
   { icon: '✨', title: 'Best action', sub: 'Gallery image from the portfolio folder', src: 'gallery/best%20act.jpg' },
+  { icon: '🎮', title: 'Playing', sub: 'Gallery image from the portfolio folder', src: 'gallery/playing.jpg' },
 ];
 
 function openLightbox(i) {
