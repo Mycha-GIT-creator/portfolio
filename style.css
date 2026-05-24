@@ -521,6 +521,10 @@ p { color: var(--text); font-size: .96rem; }
   padding: 12px 20px;
   border-top: 1px solid var(--border);
   transition: border-color .3s, background .3s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 .cert-card:hover .cert-card-footer {
   border-color: var(--accent);
