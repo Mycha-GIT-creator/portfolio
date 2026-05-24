@@ -313,22 +313,26 @@ const projects = [
   {
     num: '01', title: 'Library Management System',
     desc: 'A Java + JavaFX desktop application for managing library operations — adding and tracking books, managing borrower records, handling checkouts and returns, and generating simple reports.',
-    tags: ['Java', 'JavaFX', 'OOP', 'Desktop App'], status: 'Completed'
+    tags: ['Java', 'JavaFX', 'OOP', 'Desktop App'], status: 'Completed',
+    github: 'https://github.com/Mycha-GIT-creator/LibraryMS'
   },
   {
     num: '02', title: 'Restaurant Ordering System',
     desc: 'A Java + JavaFX simulation of a restaurant ordering workflow — browse menu items, place orders, track order status, and generate a formatted receipt at checkout.',
-    tags: ['Java', 'JavaFX', 'OOP', 'Desktop App'], status: 'Completed'
+    tags: ['Java', 'JavaFX', 'OOP', 'Desktop App'], status: 'Completed',
+    github: 'https://github.com/Mycha-GIT-creator/La-Tavola'
   },
   {
     num: '03', title: 'Smart Waste Management System',
     desc: 'A Java + JavaFX application designed to track and schedule waste collection, categorize waste types, and encourage better disposal habits through a clean and informative interface.',
-    tags: ['Java', 'JavaFX', 'OOP', 'Desktop App'], status: 'Completed'
+    tags: ['Java', 'JavaFX', 'OOP', 'Desktop App'], status: 'Completed',
+    github: 'https://github.com/Mycha-GIT-creator/TerraNova-Smart-Waste-Management-System'
   },
   {
     num: '04', title: 'My First Calculator',
     desc: 'The project that started it all. A basic arithmetic calculator built with Java and JavaFX — simple operations, clean UI, and the first time I made something that actually worked on screen. 🕷️',
-    tags: ['Java', 'JavaFX', 'Beginner'], status: 'Completed'
+    tags: ['Java', 'JavaFX', 'Beginner'], status: 'Completed',
+    github: ''
   },
 ];
 
@@ -339,6 +343,16 @@ function openModal(i) {
   document.getElementById('m-desc').textContent = p.desc;
   document.getElementById('m-tags').innerHTML = p.tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
   document.getElementById('m-status').textContent = p.status;
+  
+  // Set GitHub link
+  const githubBtn = document.getElementById('m-github');
+  if (p.github) {
+    githubBtn.href = p.github;
+    githubBtn.style.display = 'inline-block';
+  } else {
+    githubBtn.style.display = 'none';
+  }
+  
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
