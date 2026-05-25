@@ -8,7 +8,7 @@ A personal cybersecurity and development portfolio for **Mycha Shem C. Jimenea**
 
 ## 🔗 Live Preview
 
-> Add your deployed URL here once hosted (e.g. GitHub Pages, Netlify, Vercel).
+> (https://mycha-git-creator.github.io/portfolio/)
 
 ---
 
