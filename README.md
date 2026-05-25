@@ -2,7 +2,7 @@
 
 > *"Lurking in every corner of the web."*
 
-A personal portfolio by **Mycha Shem C. Jimenea** — BS Information Technology
+A personal portfolio by **Mycha Shem C. Jimenea** — BS in Information Technology
 
 ---
 
