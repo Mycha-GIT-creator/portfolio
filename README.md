@@ -69,7 +69,7 @@ A personal cybersecurity and development portfolio for **Mycha Shem C. Jimenea**
 | Form Backend | [Formspree](https://formspree.io) |
 | Charts | Custom `<canvas>` drawing (no external chart library) |
 | Icons | Inline SVG |
-| Hosting | _(add your platform here)_ |
+| Hosting | _(GitHub Pages)_ |
 
 No frameworks, no build tools, no dependencies — pure HTML/CSS/JS.
 
