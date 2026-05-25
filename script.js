@@ -335,7 +335,7 @@ const projects = [
     num: '04', title: 'My First Calculator',
     desc: 'The project that sparked my coding journey. A clean, functional calculator built with JavaFX—simple logic, major impact on learning fundamentals. 🕷️',
     tags: ['Java', 'JavaFX', 'Beginner'], status: 'Completed',
-    github: '',
+    github: 'https://github.com/Mycha-GIT-creator/CalculatorJavaFX',
     icon: '🧮'
   },
 ];
