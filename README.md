@@ -1,8 +1,8 @@
-# 🕷️ mycha.sh — Cybersecurity Portfolio
+# 🕷️ mycha.sh — Student Portfolio
 
 > *"Lurking in every corner of the web."*
 
-A personal cybersecurity and development portfolio for **Mycha Shem C. Jimenea** — BS Information Technology student, aspiring cybersecurity specialist, and developer based in Digos City, Philippines.
+A personal portfolio by **Mycha Shem C. Jimenea** — BS Information Technology
 
 ---
 
