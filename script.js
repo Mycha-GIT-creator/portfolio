@@ -339,8 +339,6 @@ const projects = [
     icon: '🧮'
   },
 ];
-  },
-];
 
 function openModal(i) {
   const p = projects[i];
@@ -617,12 +615,8 @@ document.querySelector('.nav-logo').addEventListener('click', (e) => {
 
 // CV button toast
 document.querySelector('.btn-cv')?.addEventListener('click', e => {
-  // If CV file doesn't exist yet, show a toast; otherwise let the download proceed
-  const link = e.currentTarget;
-  if (link.getAttribute('href') === 'cv/Mycha_Jimenea_CV.pdf') {
-    // Will work once the CV file is placed at cv/Mycha_Jimenea_CV.pdf
-    // If not found, browser will handle the 404 gracefully
-  }
+  // CV download functionality
+  // File is correctly placed at cv/CV.pdf
 });
 
 /* ─────────────────────────────────────────
