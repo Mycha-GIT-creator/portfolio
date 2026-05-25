@@ -312,27 +312,33 @@ if (radarCanvas) radarObserver.observe(radarCanvas);
 const projects = [
   {
     num: '01', title: 'Library Management System',
-    desc: 'A Java + JavaFX desktop application for managing library operations — adding and tracking books, managing borrower records, handling checkouts and returns, and generating simple reports.',
+    desc: 'Complete library system with book cataloging, borrower management, and checkout/return tracking. Built with JavaFX for an intuitive desktop experience.',
     tags: ['Java', 'JavaFX', 'OOP', 'Desktop App'], status: 'Completed',
-    github: 'https://github.com/Mycha-GIT-creator/LibraryMS'
+    github: 'https://github.com/Mycha-GIT-creator/LibraryMS',
+    icon: '📚'
   },
   {
     num: '02', title: 'Restaurant Ordering System',
-    desc: 'A Java + JavaFX simulation of a restaurant ordering workflow — browse menu items, place orders, track order status, and generate a formatted receipt at checkout.',
+    desc: 'Full-featured restaurant app: browse menus, place orders, track status in real-time, and generate receipts. Simulates a complete ordering workflow.',
     tags: ['Java', 'JavaFX', 'OOP', 'Desktop App'], status: 'Completed',
-    github: 'https://github.com/Mycha-GIT-creator/La-Tavola'
+    github: 'https://github.com/Mycha-GIT-creator/La-Tavola',
+    icon: '🍽️'
   },
   {
     num: '03', title: 'Smart Waste Management System',
-    desc: 'A Java + JavaFX application designed to track and schedule waste collection, categorize waste types, and encourage better disposal habits through a clean and informative interface.',
+    desc: 'IoT-enabled waste tracking system with collection scheduling, waste categorization, and disposal analytics. Promotes sustainable practices through data insights.',
     tags: ['Java', 'JavaFX', 'OOP', 'Desktop App'], status: 'Completed',
-    github: 'https://github.com/Mycha-GIT-creator/TerraNova-Smart-Waste-Management-System'
+    github: 'https://github.com/Mycha-GIT-creator/TerraNova-Smart-Waste-Management-System',
+    icon: '♻️'
   },
   {
     num: '04', title: 'My First Calculator',
-    desc: 'The project that started it all. A basic arithmetic calculator built with Java and JavaFX — simple operations, clean UI, and the first time I made something that actually worked on screen. 🕷️',
+    desc: 'The project that sparked my coding journey. A clean, functional calculator built with JavaFX—simple logic, major impact on learning fundamentals. 🕷️',
     tags: ['Java', 'JavaFX', 'Beginner'], status: 'Completed',
-    github: ''
+    github: '',
+    icon: '🧮'
+  },
+];
   },
 ];
 
