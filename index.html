@@ -92,6 +92,23 @@
   <a href="#contact" onclick="closeMenu()">contact</a>
 </div>
 
+<!-- ══════════════════════════════════════════
+     TERMINAL INTERFACE MODE
+══════════════════════════════════════════ -->
+<div id="terminal-overlay" class="terminal-overlay">
+  <div class="terminal-container">
+    <div class="terminal-header">
+      <div class="terminal-title">mycha.sh — Terminal Interface</div>
+      <button class="terminal-close" onclick="closeTerminal()" title="Close terminal (Esc)">×</button>
+    </div>
+    <div class="terminal-output" id="terminalOutput"></div>
+    <div class="terminal-input-line">
+      <span class="terminal-prompt">$</span>
+      <input type="text" id="terminalInput" class="terminal-input" placeholder="type 'help' for commands..." autocomplete="off" />
+    </div>
+  </div>
+</div>
+
 <!-- ── BACK TO TOP ── -->
 <button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
 

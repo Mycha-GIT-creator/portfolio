@@ -697,5 +697,251 @@ function closeCertLbOnBg(e) { if (e.target.id === 'certLbOverlay') closeCertLigh
 
 // Also close cert lightbox on Escape
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeModal(); closeLightbox(); closeCertLightbox(); }
+  if (e.key === 'Escape') { closeModal(); closeLightbox(); closeCertLightbox(); closeTerminal(); }
+});
+
+/* ═════════════════════════════════════════════════════
+   SECTION 20 · TERMINAL INTERFACE MODE
+   ═════════════════════════════════════════════════════ */
+
+const terminalOverlay = document.getElementById('terminal-overlay');
+const terminalInput = document.getElementById('terminalInput');
+const terminalOutput = document.getElementById('terminalOutput');
+let commandHistory = [];
+let historyIndex = -1;
+
+// Open terminal with Ctrl+K
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && e.key === 'k') {
+    e.preventDefault();
+    openTerminal();
+  }
+});
+
+// Terminal command processor
+const terminalCommands = {
+  help() {
+    return `
+Available Commands:
+  help              — show this help menu
+  about             — display about section info
+  projects --list   — list all projects
+  skills --radar    — show skills visualization
+  contact           — display contact information
+  clear             — clear terminal output
+  exit              — close terminal
+    `.trim();
+  },
+
+  about() {
+    return `
+╔════════════════════════════════════════════════════╗
+║             ABOUT MYCHA SHEM C. JIMENEA            ║
+╚════════════════════════════════════════════════════╝
+
+Identity: I like corners — I might be a spider.
+
+Location: 📍 Digos City, Philippines
+Status: Student @ Agusan del Sur State University (ADSSU)
+Major: BS Information Technology
+
+That instinct to lurk in the shadows, understand hidden structures,
+and find what others miss? It turns out that's useful in cybersecurity.
+
+Technical Stack:
+  Expert: Java, HTML, CSS
+  Intermediate: Python, JavaScript, Git, Networking
+  Learning: C#, Linux, Ethical Hacking, Cryptography
+
+Hobbies:
+  • Reading (philosophy, tech blogs, sci-fi)
+  • Listening to music (resets the mind)
+  • Anime and gaming (sharpens problem-solving)
+  • Taking walks (observing the world)
+
+Mantra: Every dark corner is a learning opportunity.
+    `.trim();
+  },
+
+  'projects --list'() {
+    return `
+╔════════════════════════════════════════════════════╗
+║                  YOUR PROJECTS                     ║
+╚════════════════════════════════════════════════════╝
+
+[01] Library Management System
+     Tags: Java, Desktop, OOP
+     A complete library system with book cataloging,
+     borrower management, and checkout/return tracking.
+     Built with JavaFX for an intuitive desktop experience.
+
+[02] Restaurant Ordering System
+     Tags: Java, Desktop, OOP
+     Full-featured restaurant app: browse menus, place orders,
+     track status in real-time, and generate receipts.
+     Simulates a complete ordering workflow.
+
+[03] Smart Waste Management System
+     Tags: Java, Desktop, OOP
+     IoT-enabled waste tracking with collection scheduling,
+     waste categorization, and disposal analytics.
+     Promotes sustainable practices through data insights.
+
+[04] My First Calculator
+     Tags: Java, Desktop, Beginner
+     The project that sparked my coding journey.
+     A clean, functional calculator built with JavaFX.
+     Simple logic, major impact on learning fundamentals.
+
+Tip: Use 'skills --radar' to see all technical proficiencies!
+    `.trim();
+  },
+
+  'skills --radar'() {
+    return `
+╔════════════════════════════════════════════════════╗
+║              SKILLS & PROFICIENCY                  ║
+╚════════════════════════════════════════════════════╝
+
+[████████░░] Java ..................... 80%
+[███████░░░] HTML / CSS ................ 72%
+[██████░░░░] Python ..................... 60%
+[█████░░░░░] JavaScript ................. 55%
+[████░░░░░░] Networking ................. 40%
+[███░░░░░░░] Linux ...................... 35%
+[██░░░░░░░░] C# ......................... 20%
+
+Legend:
+  ★★★ Expert
+  ★★☆ Intermediate
+  ★☆☆ Learning
+
+View the full skills radar in the skills section!
+    `.trim();
+  },
+
+  contact() {
+    return `
+╔════════════════════════════════════════════════════╗
+║              GET IN TOUCH                          ║
+╚════════════════════════════════════════════════════╝
+
+Email:    mychasjimenea@gmail.com
+GitHub:   github.com/Mycha-GIT-creator
+LinkedIn: linkedin.com/in/mycha-shem-jimenea-19b150330
+
+I'm open to:
+  • Cybersecurity discussions
+  • Collaboration opportunities
+  • Web and desktop projects
+  • Just saying hi! 🕷️
+
+Response time: Usually within 24 hours
+
+Head to the Contact section to send a message!
+    `.trim();
+  },
+
+  clear() {
+    terminalOutput.innerHTML = '';
+    return '';
+  },
+
+  exit() {
+    setTimeout(() => closeTerminal(), 200);
+    return 'Closing terminal... goodbye! 🕷️';
+  }
+};
+
+function openTerminal() {
+  terminalOverlay.classList.add('active');
+  terminalInput.focus();
+  if (terminalOutput.innerHTML === '') {
+    appendTerminalLine('Welcome to mycha.sh Terminal Interface', 'info');
+    appendTerminalLine('Type "help" for available commands, or "exit" to close', 'info');
+    appendTerminalLine('', 'output');
+  }
+}
+
+function closeTerminal() {
+  terminalOverlay.classList.remove('active');
+  terminalInput.value = '';
+  historyIndex = -1;
+}
+
+function appendTerminalLine(text, type = 'output') {
+  const line = document.createElement('div');
+  line.className = `terminal-line ${type}`;
+  line.textContent = text;
+  terminalOutput.appendChild(line);
+  terminalOutput.scrollTop = terminalOutput.scrollHeight;
+}
+
+function executeCommand(input) {
+  const trimmed = input.trim();
+  
+  if (!trimmed) return;
+  
+  // Add to history
+  commandHistory.push(trimmed);
+  historyIndex = commandHistory.length;
+  
+  // Display command
+  appendTerminalLine(`$ ${trimmed}`, 'command');
+  
+  // Parse command
+  const parts = trimmed.split(/\s+/);
+  const cmd = parts[0];
+  const arg = parts.slice(1).join(' ');
+  
+  let output = '';
+  let lineType = 'output';
+  
+  // Execute command
+  if (cmd === 'projects' && arg === '--list') {
+    output = terminalCommands['projects --list']();
+    lineType = 'success';
+  } else if (cmd === 'skills' && arg === '--radar') {
+    output = terminalCommands['skills --radar']();
+    lineType = 'success';
+  } else if (terminalCommands[cmd]) {
+    output = terminalCommands[cmd]();
+    lineType = cmd === 'exit' ? 'info' : 'success';
+  } else {
+    output = `Command not found: "${cmd}". Type "help" for available commands.`;
+    lineType = 'error';
+  }
+  
+  // Display output
+  if (output) {
+    output.split('\n').forEach(line => {
+      appendTerminalLine(line, lineType);
+    });
+  }
+  
+  // Add blank line for spacing
+  appendTerminalLine('', 'output');
+}
+
+// Terminal input handler
+terminalInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    executeCommand(terminalInput.value);
+    terminalInput.value = '';
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    if (historyIndex > 0) {
+      historyIndex--;
+      terminalInput.value = commandHistory[historyIndex];
+    }
+  } else if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    if (historyIndex < commandHistory.length - 1) {
+      historyIndex++;
+      terminalInput.value = commandHistory[historyIndex];
+    } else {
+      historyIndex = commandHistory.length;
+      terminalInput.value = '';
+    }
+  }
 });
