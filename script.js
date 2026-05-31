@@ -710,14 +710,6 @@ const terminalOutput = document.getElementById('terminalOutput');
 let commandHistory = [];
 let historyIndex = -1;
 
-// Open terminal with Ctrl+K
-document.addEventListener('keydown', (e) => {
-  if (e.ctrlKey && e.key === 'k') {
-    e.preventDefault();
-    openTerminal();
-  }
-});
-
 // Terminal command processor
 const terminalCommands = {
   help() {
@@ -853,7 +845,9 @@ Head to the Contact section to send a message!
   }
 };
 
+// Terminal Functions - Made globally accessible
 function openTerminal() {
+  if (!terminalOverlay || !terminalInput || !terminalOutput) return;
   terminalOverlay.classList.add('active');
   terminalInput.focus();
   if (terminalOutput.innerHTML === '') {
@@ -864,12 +858,14 @@ function openTerminal() {
 }
 
 function closeTerminal() {
+  if (!terminalOverlay || !terminalInput) return;
   terminalOverlay.classList.remove('active');
   terminalInput.value = '';
   historyIndex = -1;
 }
 
 function appendTerminalLine(text, type = 'output') {
+  if (!terminalOutput) return;
   const line = document.createElement('div');
   line.className = `terminal-line ${type}`;
   line.textContent = text;
@@ -923,8 +919,17 @@ function executeCommand(input) {
   appendTerminalLine('', 'output');
 }
 
-// Terminal input handler
-if (terminalInput) {
+// Setup Event Listeners
+if (terminalOverlay && terminalInput && terminalOutput) {
+  // Ctrl+K to open terminal
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'k') {
+      e.preventDefault();
+      openTerminal();
+    }
+  });
+  
+  // Terminal input handler
   terminalInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
       executeCommand(terminalInput.value);
