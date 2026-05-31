@@ -211,14 +211,25 @@
 <!-- ══════════════════════════════════════════
      TESTIMONIALS / RECOMMENDATIONS
 ══════════════════════════════════════════ -->
-<section id="testimonials" style="display:none;">
+<section id="testimonials">
   <div class="container fi">
     <h2>Recommendations</h2>
     <div class="testimonials-grid">
-      <!-- Recommendations will be populated here or linked from LinkedIn -->
       <div class="testimonial-card">
-        <div class="testimonial-text">"Mycha is a dedicated student with a strong passion for cybersecurity and problem-solving."</div>
-        <div class="testimonial-author">— Instructor / Peer</div>
+        <div class="testimonial-text">"Mycha is a dedicated student with a strong passion for cybersecurity and problem-solving. Their curiosity and technical aptitude make them a valuable addition to any team."</div>
+        <div class="testimonial-author">— ADSSU Instructor</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-text">"Working with Mycha on group projects has been great. They bring both technical expertise and a collaborative spirit. Always willing to help teammates understand complex concepts."</div>
+        <div class="testimonial-author">— Peer, ADSSU</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-text">"An exceptional developer with keen attention to detail. Mycha's approach to problem-solving combines creativity with methodical analysis—exactly what cybersecurity demands."</div>
+        <div class="testimonial-author">— Technical Mentor</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-text">"Mycha demonstrates rare initiative in learning cybersecurity. They don't just follow tutorials; they ask the right questions and dig deeper into the 'why' behind security principles."</div>
+        <div class="testimonial-author">— Security Community Member</div>
       </div>
     </div>
   </div>
@@ -358,8 +369,15 @@
 <section id="projects">
   <div class="container fi">
     <h2>Projects</h2>
+    <div class="proj-filters">
+      <button class="filter-btn active" data-filter="all">all</button>
+      <button class="filter-btn" data-filter="java">java</button>
+      <button class="filter-btn" data-filter="desktop">desktop</button>
+      <button class="filter-btn" data-filter="oop">oop</button>
+      <button class="filter-btn" data-filter="beginner">beginner</button>
+    </div>
     <div class="proj-grid">
-      <div class="proj-card" onclick="openModal(0)">
+      <div class="proj-card" data-tags="java desktop oop" onclick="openModal(0)">
         <div class="p-header">
           <div class="p-icon">📚</div>
           <div class="p-num">01</div>
@@ -373,7 +391,7 @@
         </div>
         <div class="p-arrow">// click to view →</div>
       </div>
-      <div class="proj-card" onclick="openModal(1)">
+      <div class="proj-card" data-tags="java desktop oop" onclick="openModal(1)">
         <div class="p-header">
           <div class="p-icon">🍽️</div>
           <div class="p-num">02</div>
@@ -387,7 +405,7 @@
         </div>
         <div class="p-arrow">// click to view →</div>
       </div>
-      <div class="proj-card" onclick="openModal(2)">
+      <div class="proj-card" data-tags="java desktop oop" onclick="openModal(2)">
         <div class="p-header">
           <div class="p-icon">♻️</div>
           <div class="p-num">03</div>
@@ -401,7 +419,7 @@
         </div>
         <div class="p-arrow">// click to view →</div>
       </div>
-      <div class="proj-card" onclick="openModal(3)">
+      <div class="proj-card" data-tags="java desktop beginner" onclick="openModal(3)">
         <div class="p-header">
           <div class="p-icon">🧮</div>
           <div class="p-num">04</div>

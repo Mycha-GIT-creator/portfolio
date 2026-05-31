@@ -367,6 +367,41 @@ function closeModal() {
 function closeModalOnBg(e) { if (e.target.id === 'modalOverlay') closeModal(); }
 
 /* ─────────────────────────────────────────
+   SECTION 9.5 · PROJECT FILTERING (NEW)
+   ───────────────────────────────────────── */
+function filterProjects(filterTag) {
+  const cards = document.querySelectorAll('.proj-card');
+  const buttons = document.querySelectorAll('.filter-btn');
+  
+  // Update active button
+  buttons.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.filter === filterTag);
+  });
+  
+  // Filter and animate cards
+  cards.forEach(card => {
+    const tags = card.dataset.tags.split(' ');
+    const shouldShow = filterTag === 'all' || tags.includes(filterTag);
+    
+    if (shouldShow) {
+      card.classList.remove('hidden');
+      card.classList.add('show');
+    } else {
+      card.classList.add('hidden');
+      card.classList.remove('show');
+    }
+  });
+}
+
+// Initialize filter buttons
+document.addEventListener('DOMContentLoaded', () => {
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => filterProjects(btn.dataset.filter));
+  });
+});
+
+/* ─────────────────────────────────────────
    SECTION 10 · GALLERY LIGHTBOX (NEW)
    ───────────────────────────────────────── */
 const galleryData = [
