@@ -315,28 +315,36 @@ const projects = [
     desc: 'Complete library system with book cataloging, borrower management, and checkout/return tracking. Built with JavaFX for an intuitive desktop experience.',
     tags: ['Java', 'JavaFX', 'OOP', 'Desktop App'], status: 'Completed',
     github: 'https://github.com/Mycha-GIT-creator/LibraryMS',
-    icon: '📚'
+    icon: '📚',
+    learned: 'Object-oriented design patterns, database operations, GUI development with JavaFX, event handling',
+    challenge: 'Implementing complex data structures for efficient search and filtering of large datasets'
   },
   {
     num: '02', title: 'Restaurant Ordering System',
     desc: 'Full-featured restaurant app: browse menus, place orders, track status in real-time, and generate receipts. Simulates a complete ordering workflow.',
     tags: ['Java', 'JavaFX', 'OOP', 'Desktop App'], status: 'Completed',
     github: 'https://github.com/Mycha-GIT-creator/La-Tavola',
-    icon: '🍽️'
+    icon: '🍽️',
+    learned: 'State management, real-time data updates, bill calculation & receipt generation, MVC architecture',
+    challenge: 'Managing real-time order status updates and ensuring data consistency across multiple views'
   },
   {
     num: '03', title: 'Smart Waste Management System',
     desc: 'IoT-enabled waste tracking system with collection scheduling, waste categorization, and disposal analytics. Promotes sustainable practices through data insights.',
     tags: ['Java', 'JavaFX', 'OOP', 'Desktop App'], status: 'Completed',
     github: 'https://github.com/Mycha-GIT-creator/TerraNova-Smart-Waste-Management-System',
-    icon: '♻️'
+    icon: '♻️',
+    learned: 'IoT integration concepts, analytics & data visualization, scheduling algorithms, sustainability principles',
+    challenge: 'Designing an efficient scheduling algorithm that balances collection routes and waste categorization'
   },
   {
     num: '04', title: 'My First Calculator',
     desc: 'The project that sparked my coding journey. A clean, functional calculator built with JavaFX—simple logic, major impact on learning fundamentals. 🕷️',
     tags: ['Java', 'JavaFX', 'Beginner'], status: 'Completed',
     github: 'https://github.com/Mycha-GIT-creator/CalculatorJavaFX',
-    icon: '🧮'
+    icon: '🧮',
+    learned: 'Basic Java fundamentals, GUI basics, event-driven programming, mathematical operations',
+    challenge: 'Understanding how to structure a simple UI and connect button clicks to operations'
   },
 ];
 
@@ -347,6 +355,24 @@ function openModal(i) {
   document.getElementById('m-desc').textContent = p.desc;
   document.getElementById('m-tags').innerHTML = p.tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
   document.getElementById('m-status').textContent = p.status;
+  
+  // Display learning outcomes
+  const learnSection = document.getElementById('m-learning-section');
+  if (p.learned) {
+    document.getElementById('m-learned').textContent = p.learned;
+    learnSection.style.display = 'block';
+  } else {
+    learnSection.style.display = 'none';
+  }
+  
+  // Display challenge
+  const challengeSection = document.getElementById('m-challenge-section');
+  if (p.challenge) {
+    document.getElementById('m-challenge').textContent = p.challenge;
+    challengeSection.style.display = 'block';
+  } else {
+    challengeSection.style.display = 'none';
+  }
   
   // Set GitHub link
   const githubBtn = document.getElementById('m-github');
