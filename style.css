@@ -455,7 +455,7 @@ p { color: var(--text); font-size: .96rem; }
   display: none;
 }
 .proj-card.show {
-  animation: fadeInScale .4s cubic-bezier(.34,1.56,.64,1);
+  animation: fadeInScale .4s cubic-bezier(.34,1.56,.64,1) forwards;
 }
 
 /* ── TESTIMONIALS ── */
